@@ -1,0 +1,147 @@
+%%%% This is the general thesis/project report template for most users
+\documentclass[showtrims]{rubook}
+%% RU Book options (subclass of memoir)
+%% a4paper or b5paper(default):  paper stock size.
+%%     If A4, show cut lines.  If b5, no cut lines.
+\usepackage[]{ruthesis}
+%% Options for ruthesis in []:
+%%   IS Icelandic is main language, otherwise default to English
+
+%%%%%% Packages and Macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{custom}
+%% Commonly-used packages and macros are in custom.sty
+%% Put any additional packages after this line
+%% !!WARNING: The geometry package is incompatible with this template!
+
+
+\graphicspath{{graphics/}{Graphics/}{./}}
+%% This is a list of folders to search for graphics files to include
+%% for the graphicx package (already loaded).  This may be case-sensitive.
+%% LaTeX will search from left to right in the list, so you can put "cropped" versions
+%% in the first directory and it will grab them first. e.g.
+%\graphicspath{{graphics-cropped/}{graphics/}{Graphics/}{./}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Reducing wheelchair dependency with a semi-autonomous following wheelchair}
+\author{Klara~Kristmundsdóttir\\Margrét~Eiríksdóttir\\Sævar~Örn~Valsson \\Þórfríður~Ina~Arinbjarnardóttir}
+\date{2023}{2}{16}%{Year}{Month}{Day}%use numbers
+
+%\DocumentInfo{TYPE}{ABBREVIATION}{DEGREE}{PROGRAM}{ECTS}{School/Department}
+\DocumentInfo{Thesis}{M.Sc.}{Master of Science}{Mechatronics}{30}{Department of Engineering}
+\DocumentDescription{T620-ENGX EngineeringX Project Report for Team 17, Section CLINX}
+% Change this if you need a custom title or if it needs to be in Icelandic
+
+%% PhD only have Thesis Committee with roles.  Examiner is part of committee.
+\SupervisorHeading{EngineeringX Evaluators}
+\Supervisors{
+  \personinfo{Joseph T. Foley}{Head Instructor}{Professor}{Reykjavík University}{Iceland}
+  \personinfo{Paolo Gargiulo}{Section Instructor}{Professor}{Reykjavík University}{Iceland}
+  \personinfo{Arnar Evgení Gunnarsson}{Section TA}{Student}{Reykjavík University}{Iceland}
+  \personinfo{Jón Stefánsson} {Stakeholder}{Student}{Reykjavík University}{Iceland}
+  \personinfo{Kári Halldórsson} {Stakeholder}{Professor}{Reykjavík University}{Iceland}
+}
+
+\begin{document}
+%% TODO: get the official cover graphic and have the system fill in the fields for you
+\maketitle{}
+\copyrightpage{}
+% If this is a PhD, register for an ISSN and ISBN, then:
+% \copyrightpage{ISSN xxxx-yyyy\\ISBN 978-xxxxxxxxxx\\\url{http://hdl.handle.net/1946/xxxx}\\}
+%\signaturepage{} %Generally only for Print copies
+
+%\begin{dedications}% Optional
+%  I dedicate this to my spouse/child/pet/power animal.
+%\end{dedications}
+
+\enableindents{}% turn on/off paragraph indents
+% RUM: "Acknowledgements (optional)"%start numbering
+
+\clearpage{}
+\tableofcontents{}\clearpage
+\listoffigures{}\clearpage
+\listoftables{}\clearpage
+
+%% A list of abbreviations is an example of a special list
+%% Other lists may be added, such as lists of algorithms, symbols, theorems, etc.
+%% IN CS PhD, this is sometimes centered.
+\chapter*{List of Abbreviations}%%RUM: Not mentioned
+%% This list demonstrates the "siunitx" package capabilities
+\begin{tabular}{ll}
+Abbreviation &Description \\
+N/A & Not Applicable \\ %New function:  \unit{} in Livetex 2021
+N/S & Not Specified \\ %New function:  \unit{} in Livetex 2021 
+\end{tabular}
+\begin{abstract}
+    Our project is an semi-autonomous following wheelchair for wheelchair users that are not bound to the chair and want to enhance their ability to walk to reduce the use of the wheelchair.
+    
+    \newline
+    \url{https://www.overleaf.com/project/63eb75216632895377abdad8}
+
+  %The goal of this template is to produce electronic output to be uploaded to Skemman that can be later printed out and bound into a professional looking textbook that fits on standard library shelves.
+  %It is important to note that A4 paper when bound requires taller shelf spacing, so the B5 paper format was chosen instead.
+  %When binding a book, the edges that face outward need to be very smooth to reduce contamination and dust from entering the book when it sits on a shelf; this is why traditionally a larger paper size is cut down to the book size.
+  %If your print house expects the stock to be A4, then make sure the rubook has the ``a4paper'' option.
+  %If they prefer to deal with preparation themselves from a B5 pdf, then the default ``b5paper'' option is correct.
+  %The template is optimized for lualatex, but should still work with pdflatex.
+  
+  %The abstract goes here in English or Icelandic.
+  %It should be a fairly short summary of the entire document.
+  %If you switch to Icelandic mode (IS option to ruthesis) then abstract will become \'{U}tdr\'{a}ttur
+
+  %Keywords / Efnisord:  Keywords, separated, by, commas
+\end{abstract}
+
+
+% RUM: "Acknowledgements (optional)"
+\chapter*{Acknowledgments} 
+
+Reykjavík University provided this project proposal and the funding for it will come out of the course budget. The stakeholder, Jón provided two wheelchairs that are allocated for modification and other operations. Both of the stakeholders also provided essential information and advice regarding the project.
+%This project is being (worked on) in partnership/cooperation/for our stakeholders, Jón and Kári....
+
+
+\clearpage{}
+
+\mainmatter{}
+\aliaspagestyle{chapter}{empty}
+% Don't put page numbers on the chapter changes
+
+%% If you would like to separate chapters into different files, use
+%% \include{chapterfile}
+%% WARNING: Make sure that all of these files (and any new ones)
+%% are UTF-8 otherwise you will get weird encoding errors.
+%\part{Getting Started} % Parts optional but useful in longer documents
+%\chapter{Instructions}
+%\input{instructions}%\input{} just adds the code
+%\part{Demonstration}
+%\part{The Second Part} % Parts optional but useful in longer documents
+
+
+\include{Chapters/chapter 1/introduction.tex}
+\include{Chapters/chapter 2/background.tex}
+\include{Chapters/chapter 2/performance_metrics.tex}
+\include{Chapters/chapter 2/target_cost.tex}
+
+\bibliographystyle{IEEEtran/bibtex/ieeetran}
+\bibliography{references}
+
+
+%% If appendices are needed, uncomment the following line
+%% and include the appendices in separate files
+\appendix{}%%RUM: "Appendicies (as appropriate)
+\include{Chapters/Appendix/target_cost.tex}
+
+%\backmatter{} % Sections after this don't get numbers
+%% We prefer that all elements be numbered
+
+%%%%%%%%%%%%% SHOW INDEX %%%%%%%%%%%%%%%%%%
+%% Index, optional.  A good idea on longer documents
+\clearforchapter{}
+\printindex{}%%RUM: Not mentioned
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-engine: luatex
+%%% End:

@@ -1,0 +1,487 @@
+%% ---------------------------------------------------------------------------------------------
+%% LaTeX Base Package Reykjavík University Theses/Dissertations/Books,
+%% ---------------------------------------------------------------------------------------------
+%% Original Author: Bjórn Þór Jónsson (bjorn AT ru.is)
+%% Refactored/Simplified on 2020-02-03: Joseph Timothy Foley <foley AT ru.is>
+%% Questions, comments, complaints: latex@RU.IS
+%% Created on 2020-02-03
+%% This code is distributed under the MIT license
+%% Details at LICENSE.md
+%% --------------- Identification ----------------------------
+\NeedsTeXFormat{LaTeX2e}
+\typeout{Thesis package for Reykjavik University V3.0 <2022/05/2>, by Joseph Timothy Foley, foley at RU.IS}
+
+%% ---------------- Critical packages -----------------------------
+\RequirePackage{etoolbox}% \newbool, \ifbool, etc.
+%% Toolbox of many many macros that make a lot of latex code smarter and more robust
+%% http://texdoc.net/texmf-dist/doc/latex/etoolbox/etoolbox.pdf
+\RequirePackage{ifluatex} %% \ifluatex
+
+%% ---------------- Boolean switches -----------------------------
+%% Booleans make it easy to enable and disable parts of the template
+\newbool{debug}
+\newbool{draftbool}
+\newbool{IS}
+\newbool{proof}
+
+
+%% ---------------- Declaration of Package Options--------------------
+%% Remember that we have \AtEndOfPackage{}
+%%     \AtBeginDocument{}, \AtEndDocument{}
+%% If you want execution conditional on file existence
+%%     \IfFileExists{filename}{true}{false}
+%%     \InputIfFileExists{filename}{true}{false}
+%% For error reporting
+%%     \PackageError{class-name}{error-text}{help-text}
+
+% Generalized settings
+\DeclareOption{debug}{%
+  \booltrue{debug}
+  \typeout{ruthesis option: debug}%
+  \typeout{DEBUG MODE ENABLED!  PREPARE FOR VERBOSITY!}}
+
+\DeclareOption{draft}{\booltrue{draftbool}}
+
+\DeclareOption{IS}{\booltrue{IS}}
+
+\DeclareOption{forcegraphics}{%
+  \PassOptionsToPackage{final}{graphicx}
+  \PassOptionsToPackage{final}{pdfpages}
+  \PassOptionsToPackage{final}{hyperref}
+  %% add any other elements that should be included in draft
+  \finalifforcegraphics{graphicx}%We have to catch graphicx early
+  \setbool{forcegraphics}{true}\typeout{ruthesis option: forcegraphics}%
+}%
+
+%%% Memoir test: Memoir Manual 21.2 p.367
+%% Only works with the memoir class!!!!!!!!!!!!!!!
+\@ifclassloaded{memoir}{\let\endruthesis\relax}{\let\endruthesis\endinput
+\PackageError{ruthesis}{The ruthesis package only works with the memoir class}%
+{\@ehd}}
+\endruthesis
+%%---------------- Execution of Options -----------------------------
+\ProcessOptions\relax% this stops searching for a * in \ProcessOptions*
+%% Read page 20 of http://latex-project.org/guides/clsguide.pdf
+%% carefully before modifying any of the execution and previous section.
+%% ---------------- Package Loading -----------------------------
+
+%% Now to print the status of all the booleans if debug boolean is set
+%% Any boolean testing must be after the \LoadClass otherwise the Option execution
+%% has not completed.
+\ifbool{debug}{%
+  \ifbool{forcegraphics}{\typeout{ruthesis bool: forcegraphics}}{}
+  \ifbool{proof}{\typeout{ruthesis bool: proof}}{}
+  \ifbool{debug}{\typeout{ruthesis bool: debug}}{}
+}{}
+
+%% ---------------- Internationalization -----------------------------
+%% Unicode setup
+\ifluatex\relax\else\RequirePackage[utf8]{inputenc}\RequirePackage[T1]{fontenc}\fi
+% Font setup
+% Standardized STIX2 fonts that print well, display on
+% e-readers/screens clearly, and have compatible licensing
+% requirements
+\RequirePackage{stix2}
+% allows UTF encoding, needed for Icelandic and other accented characters
+
+\ifbool{IS}
+{\RequirePackage[english,icelandic]{babel}}%%Icelandic main language
+{\RequirePackage[icelandic,english]{babel}}%%English main language
+%% Babel allows various automatic text to be in selected languages
+%% But to use the options, you have to always load it, even for english
+%% The languages must be specified in order.
+
+
+\usepackage[useregional]{datetime2}
+%% Smart manipulation of dates
+\renewcommand{\date}[3]{\newcommand{\thedate}{\DTMdisplaydate{#1}{#2}{#3}{-1}}}
+
+%% ---------------- Graphics ------------------------------
+\RequirePackage{graphicx}
+%% GraphicsX converts and includes graphics intelligently
+
+
+
+%% ---------------- URLs and Paths -----------------------------
+\PassOptionsToPackage{obeyspaces,spaces,hyphens,allowmove}{url}
+\RequirePackage{url}
+%% The url package typesets \url{} and unix file \path{} nicely.
+%% Watch out that you leave a space after a last \ e.g. \path{C:\ }
+%% Warning:  allowmove makes URLs not-fragile, so they can go in things that move
+%%           If this breaks you will get very very weird errors
+%% ---------------- Miscellaneous Packages ----------------------
+%% ---------------- Fonts -----------------------------
+%% Important:  The template has switched to STIX2 fonts and memoir defaults
+%% to massively simplify font selection.  You should not need to mess with fonts.
+
+% save the current font size
+\newlength{\normaltextsize}
+\setlength{\normaltextsize}{\f@size pt}
+
+%%%%%%%%%%%%%%%%% Colors %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\RequirePackage{xcolor}
+\definecolor{rugray}{rgb}{0.2,0.2,0.2}
+\definecolor{rured}{rgb}{0.84,0.10,0.13}
+
+%% ---------------- Main Code -----------------------------
+%%  Remember that we can declare commands (to make fragile things safe)
+%%  The * form is for ``short'' commands, not longer than a paragraph
+%%       \DeclareRobustCommand{cmd}[num][default]{definition}
+%%       \DeclareRobustCommand*{cmd}[num][default]{definition}
+%%  For checking if commands are redefined
+%%       \CheckCommand{cmd}[num][default]{definition}
+
+
+
+%% Comprehensive list of styles for memoir is in 7.2 (page 106)
+%% If you need to adjust the style on the chapters, modify chapter
+%% predefined styles:
+%% empty: no header nor footer
+%% plain: page num in bot center
+%% simple:  pagenum and marks on top outer edges
+%\makeoddhead{chapter}{}{}{} %to change only one side
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%% TITLE PAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Memoir titlepage definition and info at p.64
+
+
+%% Some may need a different front logo
+\newcommand{\frontlogo@ruthesis}{ru-logo}
+\newcommand{\frontlogo}[1]{\renewcommand{\frontlogo@ruthesis}{#1}}
+
+
+%% This hook puts a RU logo over the title
+%\renewcommand{\maketitlehooka}{\begin{centering}\includegraphics[width=4cm]{\frontlogo@ruthesis}\par\end{centering}\vspace{2mm}}%
+
+\renewcommand{\pretitle}{\begin{center}}%
+\renewcommand{\posttitle}{\par\end{center}}
+
+% \renewcommand{\maketitlehookb}{\begin{center}\titletextfont{}by\end{center}\vspace{1mm}}
+% 1mm adjustment to center the "by".   I've disabled it because I think the "by" looks unprofessional.
+
+\renewcommand{\preauthor}{\begin{center}\large\par}
+\renewcommand{\postauthor}{\par\end{center}}
+\newcommand{\titledetails}[1]{\renewcommand{\maketitlehookc}{#1}}
+\renewcommand{\predate}{\begin{center}\large}
+\renewcommand{\postdate}{\par\end{center}}
+\aliaspagestyle{title}{empty}
+%% ----- COPYRIGHT PAGE -----------------------------------------------------------------------
+\RequirePackage{ccicons}
+\newcommand{\copyrightpage}[1]{
+  % actually in books, this is often on the left side
+  \begin{coverleft}
+    \begin{vplace}[1.0] % ratio of space above and below
+      \begin{flushleft}
+        #1
+        Copyright \textcopyright{} \the\year{} \theauthor{} \ccbyncnd
+      \end{flushleft}
+      This work is licensed under the Creative Commons
+      Attribution-NonCom\-mercial-NoDerivatives 4.0 International License
+      (\url{http://creativecommons.org/licenses/by-nc-nd/4.0/}). You may
+      copy and redistribute the material in any medium or format, provide
+      appropriate credit, link to the license and indicate what changes you made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. You may not use the material for commercial purposes. If you remix, transform or build upon the material, you may not distribute the modified material.
+      The images or other third party material in this thesis are included in
+      the book’s Creative Commons license, unless indicated otherwise in a
+      credit line to the material. If material is not included in the book’s
+      Creative Commons license and your intended use is not permitted by
+      statutory regulation or exceeds the permitted use, you will need to
+      obtain permission directly from the copyright holder. The use of
+      general descriptive names, registered names, trademarks, service
+      marks, etc. in this publication does not imply, even in the absence of
+      a specific statement that such names are exempt from the relevant
+      protective laws and regulations and therefore free for general use.
+    \end{vplace}
+  \end{coverleft}
+}
+
+%% ---------- Page Styles --------------------------------------------------------------
+%% ---------------------------------------------------------------------------------------------
+%%  Setup the formatting at the beginning of the document (Front material)
+%% TODO: use the memoir \frontmatter \mainmatter \backmatter
+%%  See documentation, page 73
+
+%%%%%%%%% PARAGRAPH ADJUSTMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\savedparindent}
+\newcommand{\disableindents}{\setlength{\parindent}{0pt}}
+\newcommand{\enableindents}{\setlength{\parindent}{\savedparindent}}
+
+\AtBeginDocument{
+  \frontmatter
+  \setlength{\savedparindent}{\parindent}  % save the current parindent
+  \SingleSpacing%
+}
+
+%% Disable clearforchapter on formats that do not need blank pages
+\ifbool{draftbool}{\renewcommand{\clearforchapter}{\newpage}}
+  % waste less blank pages in draft mode
+  % see p123 http://ctan.uib.no/macros/latex/contrib/memoir/memman.pdf
+
+\newenvironment{cover}% commonalities for the cover material
+{\thispagestyle{cover}%
+  \pagestyle{cover}%
+  \clearforchapter%
+  \disableindents%
+  \SingleSpacing}%
+{%\setlength{\TPMargin}{0mm} %% margins inside the textblock
+  \enableindents{}\newpage}%
+
+
+\newenvironment{coverleft}%This is material that is OK being on the
+                          %backside
+{\thispagestyle{cover}%
+  \pagestyle{cover}%
+  \cleartoverso%
+  %\clearforchapter% clear to chapter setting  
+  \disableindents%
+  \SingleSpacing}%
+{%\setlength{\TPMargin}{0mm} %% margins inside the textblock
+  %% I don't remember why we need to mess with \TPmargin --foley
+  \enableindents{}\newpage}%
+
+
+
+%% ----- DEDICATIONS ---------- ---------------------------------------------------------------
+\newenvironment{dedications}{\begin{cover}\begin{vplace}[0.33]% ratio of space above and below
+      \begin{center}\em}
+      {\end{center}\normalfont\end{vplace}\end{cover}}
+
+%%%%%%%%%%%% DRAFT AND PROOF MARKS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\draftmark}{}
+\newcommand{\draftbigmark}{}
+
+\ifbool{proof}{\renewcommand{\draftmark}{{\color{blue}\textsc{Proof}}}%
+  \renewcommand{\draftbigmark}{{\color{blue}\warningfont{}*** \draftmark{} *** \\PLEASE DO NOT DISTRIBUTE\\}}}{}
+\ifbool{draftbool}{\renewcommand{\draftmark}{{\color{red}\textsc{Draft}}}%
+  \renewcommand{\draftbigmark}{{\color{red}\warningfont{}*** \draftmark{} *** \\PLEASE DO NOT DISTRIBUTE\\}}}{}%
+%%% Page styles Memoir Manual ch7.2 p109 
+\aliaspagestyle{book}{simple}
+\aliaspagestyle{chapter}{plain}%At the beginning we want page numbers on chapters
+\aliaspagestyle{cleared}{simple}
+\aliaspagestyle{part}{empty}
+\aliaspagestyle{title}{simple}
+\aliaspagestyle{titlinpage}{empty}  
+
+% \ifboolexpr{bool {draftbool} or bool {proof}}{
+%   \makeoddfoot{cover}{}{\thepage}{\draftmark}
+%   \makeevenfoot{cover}{\draftmark}{\thepage}{}
+%   %\makeoddfoot{plain}{}{\thepage}{\draftmark}
+%   %\makeevenfoot{plain}{\draftmark}{\thepage}{}
+%   \makeoddfoot{simple}{}{}{\draftmark}
+%   \makeevenfoot{simple}{\draftmark}{}{}
+% }{}
+
+\makepagestyle{plain}% Just page numbers in corners
+\makeevenhead{plain}{\thepage}{}{}
+\makeoddhead{plain}{}{}{\thepage}
+
+\makepagestyle{cover}% The cover pages have no page numbers
+\makeoddfoot{cover}{}{}{}
+\makeevenfoot{cover}{}{}{}
+
+\newcommand{\coverchapter}[1]{\clearforchapter\pagestyle{cover}\chapter{#1}\thispagestyle{cover}}
+
+
+%%% Section numbering and the Table of Contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+\maxsecnumdepth{subsubsection}  % default by \mainmatter in preamble
+%\setsecnumdepth{subsubsection}  % can be changed later
+\maxtocdepth{subsubsection}  % default by \mainmatter in preamble
+%\settocdepth{subsubsection}  % can be changed later
+
+%%% Code to include files if they exist
+\newcommand{\InputIfExists}[1]{\IfFileExists{#1}{\input{#1}}{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TWEAKS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% Some adjustments to float placement
+\setcounter{topnumber}{5} \def\topfraction{1} \setcounter{bottomnumber}{4}
+\def\bottomfraction{1} \setcounter{totalnumber}{10} \def\textfraction{0}
+\def\floatpagefraction{.5}
+
+%\def\@makefnmark{\rlap{\@textsuperscript{\@thefnmark}}}
+%% Not sure why there was a footnote adjustment on the cover
+%% Disabling for now.
+
+%% Penalties for various text placement issues
+%% They can cause strange paragraph spacing on some pages
+%% Disabling for now --foley
+%\clubpenalty=10000%% orphan lines
+%\widowpenalty=10000%% widow lines
+%\hfuzz=1pt%% avoid overfilled hboxes
+%\vfuzz=5pt%% avoid overfilled vboxes
+\raggedbottom{}
+%% Vertical justification is the default.
+%% This causes problems on some pages with figures or chapter headings
+%% Allowing ragged bottoms keeps the spacing consistent between paragraphs
+%% Alternatively:  \setlength{\parskip}{0pt}
+
+%\newcommand{\draftnote}[1]{\ifdraft{{\color{gray}#1}}}
+
+%% We need the paralist and dashrule package in order to format the signature pages
+\RequirePackage{paralist}
+\RequirePackage{dashrule}
+
+%% Information about Institution, Author, Degree, and Program
+\newcommand{\theInstitution}{Reykjav\'{\i}k University}%
+\newcommand{\theInstitutionAddress}{Menntavegur 1\\102 Reykjavík, Iceland}
+\newcommand{\theInstitutionPhone}{+354 599 6200}
+\newcommand{\theInstitutionURL}{www.ru.is}%
+
+\newcommand{\theDocumentType}{Dissertation}
+\newcommand{\theDegreeAbbrv}{Ph.D.}
+\newcommand{\theDegreeLong}{Doctorate}
+\newcommand{\theProgram}{\LaTeX{} Magic}
+\newcommand{\theECTS}{30}
+\newcommand{\theSchool}{School of Awesomeness}
+\newcommand{\DocumentInfo}[6]{
+  \renewcommand{\theDocumentType}{#1}
+  \renewcommand{\theDegreeAbbrv}{#2}
+  \renewcommand{\theDegreeLong}{#3}
+  \renewcommand{\theProgram}{#4}
+  \renewcommand{\theECTS}{#5}
+  % ECTS Only applicable on BSc. and MSc.
+  % Leave blank
+  \renewcommand{\theSchool}{#6}
+}
+\newcommand{\theDegreeAndDepartment}{\theDegreeLong (\theDegreeAbbrv)  in \theProgram{}}
+
+
+
+\newcommand{\supervisors@ruthesis}{\item No Advisor}
+\newcommand{\Supervisors}[1]{\renewcommand{\supervisors@ruthesis}[1]{#1}}
+\newcommand{\supervisorheading@ruthesis}{Supervisor}
+\newcommand{\SupervisorHeading}[1]{\renewcommand{\supervisorheading@ruthesis}{#1}}
+
+\newcommand{\examiners@ruthesis}{\item No Examiner}
+\newcommand{\Examiners}[1]{\renewcommand{\examiners@ruthesis}[1]{#1}}
+\newcommand{\examinerheading@ruthesis}{Examiner}
+\newcommand{\ExaminerHeading}[1]{\renewcommand{\examinerheading@ruthesis}{#1}}
+
+\newcommand{\personinfo}[5]{
+\item[]  #1, #2\\#3, #4, #5 %Stub to be customized later
+}
+
+\newenvironment{peoplelist}
+{\begin{compactitem}[\hspace{10mm}]}
+{\end{compactitem}}
+
+\newenvironment{rolelist}
+{\begin{compactitem}[\hspace{10mm}]}
+{\end{compactitem}}
+
+
+%% Clean up some formatting for the text
+\renewcommand{\thepage}{\roman{page}}
+
+%% Footnote adjustments. These are mostly unnecessary
+% \let\footnoterule\relax \null % Turn off the footnote rule line
+%\renewcommand{\thefootnote}{\scriptsize\arabic{footnote}} %to fix large footnote text errors in some documents
+
+\renewcommand{\bibname}{Bibliography} %Renaming the bibliography section (if omitted it will be named "references")
+
+
+%% ----- PRINTED FRONT COVER (PHD) ----------------------------------------------------------
+%% This cover will be on the outside (not with window)
+%% Needs textpos package!
+\RequirePackage{calc}%arithmetic on lengths
+
+\RequirePackage{printlen}% display lengths in arbitrary units
+\ifbool{debug}{\PassOptionsToPackage{showboxes}{textpos}}
+\RequirePackage[absolute, verbose]{textpos}%
+
+%% These commands set the units in \begin{textblock} when not 
+%%  directly specified
+%% We set them to the page sizes so we can align from them
+\setlength{\TPHorizModule}{\paperwidth}
+\setlength{\TPVertModule}{\paperheight}
+\setlength{\TPMargin}{2mm}%% margins inside the textblock*
+\textblockorigin{0mm}{0mm}% start everything near the top-left corner
+\newlength{\pagecenterx}%
+\setlength{\pagecenterx}{0.5\stockwidth}
+\newlength{\pagecentery}
+\setlength{\pagecentery}{0.5\stockheight}
+  
+%% ----- INTERNAL TITLE PAGE WITH COMMITTEE ---------------------------------------------------
+%% TODO: make counter for supervisors in the very rare case that there
+%% is only one supervisor
+\newcommand{\DocumentDescription}[1]{\renewcommand{\maketitlehookc}{{\begin{center}#1\par\end{center}}}}
+
+%% maketitlehookd is after the date
+\renewcommand{\maketitlehookd}{{%
+  \vspace{2\baselineskip}
+  % change \personinfo to make the entries needed
+  % Because this is inside a command, we escape the #1 as ##1      
+  \renewcommand{\personinfo}[5]{\item[]  ##1, ##2\\##3, ##4, ##5}
+  \setlength{\pltopsep}{0.5\baselineskip}  % first/top space
+  \setlength{\plparsep}{0.5\baselineskip} % space between entries
+  \setlength{\plitemsep}{0.5\baselineskip} % space between lines
+  \begin{rolelist}
+  \item \supervisorheading@ruthesis{}:
+    \begin{peoplelist}
+      \supervisors@ruthesis{}
+    \end{peoplelist}
+  \end{rolelist}
+}\vfill}
+
+
+%% ----- SIGNATURE PAGE, ONLY THESIS -----------------------------------------------------
+\newlength{\signaturey}
+\setlength{\signaturey}{8mm}
+\newlength{\signaturex}
+\setlength{\signaturex}{100mm}
+
+\newcommand{\signaturepage}{
+  \begin{cover}
+    The undersigned hereby certify that they recommend to the
+    \theSchool{} at \theInstitution{} for acceptance this
+    \theDocumentType{} entitled \textbf{\thetitle}
+    submitted by \textbf{\theauthor} in partial fulfillment
+    of the requirements for the degree of \textbf{\theDegreeAndDepartment}%
+    \vspace*{2\baselineskip}
+    
+    \newcommand{\signline}[2]{\item \hdashrule{##2}{1pt}{1pt}\\##1}
+    \renewcommand{\personinfo}[5]{\item\hdashrule{\signaturex}{1pt}{1pt}\\##1, ##2\\##3, ##4, ##5\\\vspace{\signaturey}\\}
+    \setlength{\pltopsep}{2\baselineskip}  % first/top space
+    \setlength{\plparsep}{2\baselineskip} % space between entries
+    \setlength{\plitemsep}{0.5\baselineskip} % space between lines
+    {%\sigtextfont% 
+      % change \personinfo to make the entries needed
+      % Because this is inside a command, we escape the #1 as ##1
+      \renewcommand{\personinfo}[5]{&\hdashrule{\signaturex}{1pt}{1pt}\\&##1\\\vspace{\signaturey}\\}
+      \begin{compactitem}[]
+         \signline{date}{50mm}
+       \end{compactitem}
+      \begin{tabular}{lll}
+        Student:\\
+        \personinfo{\theauthor}{}{}{}{}\\
+        \supervisorheading@ruthesis:\\
+        \supervisors@ruthesis{}\\
+        %\examinerheading@ruthesis:\\%% MSc old template
+        %\examiners@ruthesis{}
+      \end{tabular}
+    }% end sigtextfont      
+  \end{cover}
+}
+
+
+
+\renewenvironment{abstract}
+{\begin{coverleft}{\centering%
+    {{\Large \thetitle}\\}%%
+    \vspace{\baselineskip}
+    \theauthor\\%
+    \vspace{\baselineskip}
+    \thedate\\%
+  }%
+  \enableindents{}
+  \textbf{Abstract}\par\vspace{1ex}}
+{\par\end{coverleft}\newpage}
+
+
+%%% from the old cs template, if so desired
+%\makepagestyle{oldstyle}
+%\makeoddhead{oldstyle}{\footnotesize{\authorHeader@ruthesis}}{}{\footnotesize{\thepage}}
+%\makeevenhead{oldstyle}{\footnotesize{\thepage}}{}{\footnotesize{\thetitle}}

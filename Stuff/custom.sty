@@ -1,0 +1,47 @@
+%%%%% CUSTOM.STY %%%%%%%%%
+%% Macros and packages to add functionality beyond the basic template
+%% This is the location to put your own customizations
+
+%%%%%%%%%%%%%%%%%% TextPos %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% These macros allow you to arbitrarily position things on the page
+%% This is needed for any cover pages/graphics
+
+%\RequirePackage{printlen}% display lengths in arbitrary units
+%\ifbool{debug}{\PassOptionsToPackage{showboxes}{textpos}}
+%\RequirePackage[absolute, verbose]{textpos}%
+
+%% These commands set the units in \begin{textblock} when not 
+%%  directly specified
+%% We set them to the page sizes so we can align from them
+%\setlength{\TPHorizModule}{\paperwidth}
+%\setlength{\TPVertModule}{\paperheight}
+%%\setlength{\TPMargin}{2mm} %% margins inside the textblock*
+%\textblockorigin{0mm}{0mm} % start everything near the top-left corner
+
+
+\newcommand{\formatemail}[1]{$<$\texttt{#1}$>$}
+
+\usepackage[flushleft]{threeparttable}  % allows us to make tables with footnotes
+
+\usepackage[final]{listings}
+%%% Formatting code inclusion and snippets
+%% "final" option to force it to display code
+
+\usepackage{siunitx}
+%% \SI{9.82}{\meter\per\second\square}
+
+
+%% FIXME system for making notes to each other for what needs to 
+%% be completed in a group document.
+\usepackage[layout=inline]{fixme}
+%% internal layouts: inline, margin, footnote, index, marginclue
+%% % Warning! The pdf external layouts do not play well with hyperref
+%% % and must be loaded by doing \fxuselayouts{}
+
+% \RequirePackage[autostyle,strict]{csquotes}
+%% http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/csquotes/csquotes.pdf
+%% You invoke with \enquote{} and \blockquote{}
+%% csquotes must be loaded before babel for AUCTeX
+%% autostyle: update style as language changes in document
+%% strict: any warnings become errors
+%% Don't forget to load Babel!

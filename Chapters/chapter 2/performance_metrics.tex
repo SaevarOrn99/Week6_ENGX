@@ -1,0 +1,115 @@
+\section{Performance Metrics}
+
+Customer needs were developed from interviewing the stakeholders, and the previous study, made by our stakeholder, Jón. 
+The customer needs were organized by grouping together similar needs. 
+Then the needs were organized into an hierarchy, which can be seen in table \ref{tab:customerneeds}. 
+Latent needs were also identified and can also been seen in table \ref{tab:customerneeds}, denoted by !.
+A list of metrics was prepared, and competitive benchmarking information was collected. 
+The competitive benchmarking chart can be seen in table \ref{tab:metric}. 
+The competitive benchmarking chart was then converted to table \ref{tab:bench_markt}, which considers perceived satisfaction of needs.
+ 
+
+% listað upp 
+\begin{table}[!ht]
+\centering
+\label{tab:customerneeds}
+\caption{Customer needs and their importance. Importance ratings are indicated by the number of *'s, with *** denoting critically important needs. Latent needs are denoted by !.}
+\scalebox{0.87}
+{\begin{tabular}{clclll}
+\hline
+\multicolumn{1}{l}{\textbf{No.}} & \multicolumn{1}{c}{\textbf{Customer Needs}}                                                                               & \multicolumn{1}{l}{\textbf{Importance}} \\ \hline \hline
+\textbf{1}           & \textbf{The wheelchair can move remotely}        & \textbf{***} \\
+1.1                  & The wheelchair can accelerate                    & \textbf{***} \\
+1.2                  & The wheelchair can turn                           & \textbf{**} \\ \\
+\textbf{2}           & \textbf{The wheelchair is safe}                   &    \textbf{***}  \\
+2.1                  & The wheelchair senses accurately / is reliable    & \textbf{***}  \\
+2.2                  & The   wheelchair can be aware of its surrounding    & \textbf{**}  \\
+2.3     & The   wheelchair doesn‘t bump into the user     & \textbf{***}   \\
+2.4                  & The wheelchair can handle obstacles       & \textbf{**}  \\
+2.5                  & The wheelchair can follow the user through doors   & \textbf{*}\\
+2.6                  & The wheelchair can know where the user is & \textbf{***}  \\ \\
+\textbf{3}           & \textbf{The wheelchair is practical}       & \textbf{***}  \\
+3.1                  & The wheelchair cannot be heavy   & \textbf{***}               \\
+3.2                  & The wheelchair hardware can be easily affixed   & \textbf{**}      \\
+3.3                  & \begin{tabular}[c]{@{}l@{}}Can work as a standard wheelchair when\\ feature is not on\end{tabular}   & \textbf{***}    \\
+\multicolumn{1}{l}{3.4} & The wheelchair is not loud   & \textbf{!}   \\ \\
+\textbf{4}           & \textbf{The wheelchair is durable}   & \textbf{**} \\
+4.1                  & The wheelchair can handle an hour session at a time  & \textbf{**}  \\ \\
+\textbf{5}           & \textbf{The wheelchair provides feedback}       &    \textbf{**}                     \\
+5.1                  & \begin{tabular}[c]{@{}l@{}}The wheelchair lets the user know if something is wrong, \\ i.e. far behind/stuck\end{tabular} & \textbf{***}  \\
+5.2   & The wheelchair can communicate with the user   & \textbf{**}   \\
+5.3 & The wheelchair can let the user know the distance he walked & \textbf{!}  \\ \hline
+\end{tabular}}
+\end{table}
+
+
+
+%Competitive benchmarking chart based on metrics
+
+\begin{table}[h]
+\caption{Competitive benchmarking chart based on metrics. * denotes an educated guess based on information provided by the source of the product/project. N/A is used for not applicable and N/S is used for not specified.}
+\resizebox{\textwidth}{!}{\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\begin{tabular}[c]{@{}c@{}}No.\end{tabular} & \begin{tabular}[c]{@{}c@{}}Need \\ No.\end{tabular}     & Metric                                                                                                 & Imp & Unit   & \begin{tabular}[c]{@{}c@{}}Permobil \\ Smartdrive \\ MX2+\\Power \\ Add-On Kit\end{tabular} & \begin{tabular}[c]{@{}c@{}}Airwheel \\ SR5\end{tabular} & \begin{tabular}[c]{@{}c@{}}Robotic\\Wheelchair \\ with \\ Omni-
+\\directional \\ vision\end{tabular} & \begin{tabular}[c]{@{}c@{}}The Model \\ H Hybrid\end{tabular} & \begin{tabular}[c]{@{}c@{}}Person \\ following \\ Robot \\CNN\end{tabular} \\ \hline
+1 & 1, 2.3  & \begin{tabular}[c]{@{}c@{}}Distance\\from user\end{tabular}  & 5   & m & N/A  & N/S  & N/S  & N/A   & 1     \\ \hline
+2   & 1.1   & Speed    & 5   & km/h   & 8.8  & 6 & N/S  & 8   & 3.6      \\ \hline
+3  & 1.2   & Rotation & 5   & deg    & N/A  & 360* & 360* & 360*  & 360*  \\ \hline
+4  & 2 & VOTTUN!!!!!! & 4   & binary & Pass   & N/A  & Fail*    & Pass*    & Fail   \\ \hline
+5    & 2.1  & \begin{tabular}[c]{@{}c@{}}Sensor have small\\ margin of error\end{tabular}& 4   & \%     &  N/S  & Low*  & Low*   & N/A  & Low*   \\ \hline
+6  & 2.2   & \begin{tabular}[c]{@{}c@{}}Reacts to\\environment \end{tabular}  & 4   & s  & N/A   & 1*   & 3*  & N/A   & 2*       \\ \hline
+7 & 2.4 & \begin{tabular}[c]{@{}c@{}}Minimum\\distance\\  from obstacles\end{tabular} & 4  & m  &  N/A &  N/S & N/S  & N/A &  N/S\\ \hline
+8  & 2.5  & Door test  & 1   & binary & Pass & Pass    & Pass    & Pass     & Pass   \\ \hline
+9  & 2.6     & \begin{tabular}[c]{@{}c@{}}Coordinates\\ comparing from \\ user device to \\ the wheelchair\end{tabular} & 5 & deg    & N/A &  N/S   & N/A  & N/A & N/A   \\ \hline
+10 & 3  & \begin{tabular}[c]{@{}c@{}}How likely is \\ the user to \\ use the product\end{tabular}  & 4   & subj.  & ?????             & ????  & ?????   & ?????  & ?????  \\ \hline
+11 & 3.1 & Total mass of kit & 4   & kg     & 5.7   & 6  & N/S   & 17.7   & 15* 
+\\ \hline
+12 & 3.2      & \begin{tabular}[c]{@{}c@{}}Time to assemble \\ for the first \\time\end{tabular}  & 2   & s      & 60*     & 0*   & 0*  & 0*    &  N/S \\ \hline
+13 & 3.2   & \begin{tabular}[c]{@{}c@{}}80\% of user can\\  assemble without \\ assistance\end{tabular}  & 1   & binary &  N/S    & Pass*  & Pass*    & Pass* &  N/S  \\ \hline
+14     & 3.3   & \begin{tabular}[c]{@{}c@{}}Manual propelling \\ available\end{tabular}   & 5   & binary & Pass   & Pass & Fail & Pass & N/A     \\ \hline
+15 & 3.4  & Maximum noise  & 2   & dB     &  N/S    & Mute &  N/S  &  N/S &  N/S     \\ \hline
+16  & 4       & \begin{tabular}[c]{@{}c@{}}Durability longer \\ than 3 years\end{tabular} & 3   & years  & 2+  &  N/S&  N/S  & 5+   &  N/S  
+\\ \hline
+17 & 4.1  & \begin{tabular}[c]{@{}c@{}}Minimum\\duration\end{tabular}  & 3  & km  & 19.8 & 5  &  N/S  & 13  &  N/S 
+\\ \hline
+18   & 5   & \begin{tabular}[c]{@{}c@{}}Conveys messages\\  to user\end{tabular}   & 4   & binary & Pass  & Pass & Fail  & Fail  & Pass                              \\ \hline
+19 & \begin{tabular}[c]{@{}c@{}}5.1,\\ 5.2,\\ 5.3\end{tabular} & \begin{tabular}[c]{@{}c@{}}Minimum volume\\from message\end{tabular}& 3   & dB     &  N/S  &  N/S   &  N/S  & N/A  &  N/S \\ \hline
+20 & 5.1 &\begin{tabular}[c]{@{}c@{}} Minimum \\vibration \end{tabular} & 1 & Hz &  N/S  &  N/S & N/A & N/A & N/A  \\ \hline
+21 & 5.2 & \begin{tabular}[c]{@{}c@{}}Minimum\\ luminance\\ of LED\end{tabular} & 2 & Lumens &  N/S &  N/S & N/A &  N/S &  N/S \\ \hline
+22 & 5.3 & \begin{tabular}[c]{@{}c@{}}Keep track\\of distance \end{tabular}  & 1   & binary & Pass   & 170-240*   &  N/S  & N/A& N/A \\ \hline
+23 & 5.3 & Screen message & 1   & binary & Pass  & Pass  & Fail & Fail & N/A \\ \hline
+\end{tabular}}
+\label{tab:metric}
+\end{table}
+
+
+% Competitive benchmarking chart based on perceived satisfaction of needs.
+\begin{table}[h]
+\caption{Competitive benchmarking chart based on perceived satisfaction of needs. (Scoring more “dots” corresponds to greater perceived satisfaction of the need.)}
+\resizebox{\textwidth}{!}{\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{No.} & \textbf{Need} & \textbf{Imp} & \textbf{\begin{tabular}[c]{@{}c@{}}Permobil \\ Smartdrive \\ MX2\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Airwheel \\ SR5\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Robotic \\ Wheelchair\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Model\\H \\ Hybrid\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Person \\Following \\ Robot\end{tabular}} \\ \hline
+1. & \textbf{\begin{tabular}[c]{@{}c@{}}Can move \\ remotely\end{tabular}} & 5 & * & ***** & ***** & * & ***** \\ \hline
+1.1 & Can move & 5 & ****** & ***** & ***** & ***** & ***** \\ \hline
+1.2 & Can turn & 4 & *** & ***** & ***** & ***** & ***** \\ \hline
+2 & \textbf{Is safe} & 5 & ** & ***** & **** & ***** & *** \\ \hline
+2.1 & \begin{tabular}[c]{@{}c@{}}Senses accurately \\ /is reliable\end{tabular} & 4 & * & ***** & ***** & * & ***** \\ \hline
+2.2 & \begin{tabular}[c]{@{}c@{}}Is aware of \\ its surroundings\end{tabular} & 3 & * & ***** & ***** & * & ***** \\ \hline
+2.3 & \begin{tabular}[c]{@{}c@{}}Doesn‘t bump \\ into the user\end{tabular} & 5 & * & ***** & ***** & * & **** \\ \hline
+2.4 & \begin{tabular}[c]{@{}c@{}}Can handle \\ obstacles\end{tabular} & 4 & * & ***** & ***** & * & * \\ \hline
+2.5 & \begin{tabular}[c]{@{}c@{}}Can follow the \\ user through doors\end{tabular} & 2 & * & ***** & ***** & * & **** \\ \hline
+2.6 & \begin{tabular}[c]{@{}c@{}}Can know where\\  the user is\end{tabular} & 5 & * & ***** & ***** & * & ***** \\ \hline
+3 & \textbf{Is practical} & 4 & **** & **** & *** & ** & *** \\ \hline
+3.1 & Can not be heavy & 5 & ***** & **** & * & ***** & **** \\ \hline
+3.2 & \begin{tabular}[c]{@{}c@{}}Hardware can\\  be easily affixed\end{tabular} & 3 & **** & **** & *** & ***** & *** \\ \hline
+3.3 & \begin{tabular}[c]{@{}c@{}}Can work as a \\ standard wheelchair \\ when feature\\is not on\end{tabular} & 5 & ***** & * & * & ***** & * \\ \hline
+3.4 & Is not loud & 2 & *** & *** & **** & *** & *** \\ \hline
+4 & \textbf{Is durable} & 2 & ***** & ** & ***** & ***** & ** \\ \hline
+4.1 & \begin{tabular}[c]{@{}c@{}}Can handle an \\ hour session\\at a time\end{tabular} & 3 & ***** & **** & ***** & ***** & *** \\ \hline
+5 & \textbf{Provides feedback} & 4 & *** & ***** & *** & * & **** \\ \hline
+5.1 & \begin{tabular}[c]{@{}c@{}}Lets the user\\  know if something \\ is wrong,\\  i.e. far behind/stuck\end{tabular} & 4 & * & ***** & * & * & ** \\ \hline
+5.2 & \begin{tabular}[c]{@{}c@{}}Can communicate\\  with the user\end{tabular} & 4 & ** & ***** & *** & ** & ** \\ \hline
+5.3 & \begin{tabular}[c]{@{}c@{}}Can let the user \\ know the distance\\  he walked\end{tabular} & 1 & ***** & * & * & * & * \\ \hline
+\end{tabular}}
+\label{tab:bench_markt}
+\end{table}

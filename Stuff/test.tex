@@ -1,0 +1,87 @@
+\documentclass{memoir}
+\usepackage[online,IS]{Stuff/ruthesis}
+\usepackage[useregional]{datetime2}
+\usepackage{xparse}%Latex3 argument parsing
+
+
+%\usepackage{graphicx}
+\title{Minimal Document for Testing}
+\author{Joseph T. Foley \and Someone Else}
+% \author:  Use \and as a separator and \thanks{details} for additional info
+\date{2020}{2}{2}
+%% TODO:  use datetime2 to be smarter about dates
+
+% \usepackage[icelandic,english]{babel}
+% \usepackage[english,icelandic]{babel}
+%\usepackage[icelandic]{babel}
+
+\begin{document}
+% \frontrequiredpages{}
+%\ects{30}
+
+
+
+
+%% Titlepage the Memoir way
+\maketitle
+
+% \babelensure{icelandic}
+\selectlanguage{icelandic}
+\begin{abstract}
+  This is a test abstract in Icelandic.
+  % \icelandicmonthiiname to manually create names
+  \today
+\end{abstract}
+
+\selectlanguage{english}
+\begin{abstract}
+  This is a test abstract in English.
+  \today
+\end{abstract}
+
+\newpage
+\chapter{Test Chapter}
+\newcommand{\varEN}{***English***}
+\newcommand{\varIS}{***Icelandic***}
+\NewDocumentCommand{\setVar}{O{#2} m}
+% ARGS: [optional use #2], {mandatory} 
+{ 
+  \renewcommand{\varIS}{#1}
+  \renewcommand{\varEN}{#2}
+}
+\setVar{Universal Title}
+  
+  \begin{itemize}
+  \item English: \varEN{}
+  \item Icelandic: \varIS{}
+  \end{itemize}
+
+
+blah blah blah
+%\copyrightpage{}%%RUM: Not mentioned
+%\signaturepage{}%%RUM: "Signature page (standard format)    
+%\archivesigpage{}%%RUM: Not mentioned, optional, but should be required
+%\abstractpage{}%%RUM: "Abstract (in English and Icelandic)
+
+%\mainmatter{}%%Front matter done, get down to business
+%\pagestyle{headings}%default
+%Test
+%\backcover{}
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%% TeXStudio Magic Comments %%%%%%%%%%%%%%%%%%%%%
+%% These comments that start with "!TeX" modify the way TeXStudio works
+%% For details see http://texstudio.sourceforge.neit/manual/current/usermanual_en.html   Section 4.10
+%%
+%% What encoding is the file in?
+% !TeX encoding = UTF-8
+%% What language should it be spellchecked?
+% !TeX spellcheck = en_US
+%% What program should I compile this document with?
+% !TeX program = pflatex
+
+%%%%%%%%%%%%%%%%%%% Emacs Variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
